@@ -1,0 +1,103 @@
+import Image from "next/image";
+import type { Series } from "@/data/series";
+
+export function SeriesImageLayout({ series }: { series: Series }) {
+  if (series.layoutType === "portrait") {
+    return (
+      <div className="flex flex-col gap-10">
+        {series.images.map((img) => (
+          <figure key={img.id} className="flex flex-col gap-4">
+            <div className="overflow-hidden rounded-md bg-zinc-100">
+              <Image
+                src={img.src}
+                alt={img.title ?? ""}
+                width={1200}
+                height={1600}
+                className="h-auto w-full object-cover align-middle transition-transform duration-700 ease-out hover:scale-[1.02]"
+                priority
+              />
+            </div>
+            {(img.title || img.description) && (
+              <figcaption className="max-w-md text-xs uppercase tracking-[0.2em] text-zinc-500">
+                {img.title && <div className="mb-1">{img.title}</div>}
+                {img.description && (
+                  <p className="text-[11px] normal-case tracking-normal text-zinc-500">
+                    {img.description}
+                  </p>
+                )}
+              </figcaption>
+            )}
+          </figure>
+        ))}
+      </div>
+    );
+  }
+
+  if (series.layoutType === "experimental") {
+    return (
+      <div className="grid grid-cols-6 gap-4">
+        {series.images.map((img, index) => {
+          const span = index % 3 === 0 ? 4 : 3;
+          return (
+            <figure
+              key={img.id}
+              className={`col-span-6 sm:col-span-${span} flex flex-col gap-3`}
+            >
+              <div className="overflow-hidden rounded-md bg-zinc-100">
+                <Image
+                  src={img.src}
+                  alt={img.title ?? ""}
+                  width={1200}
+                  height={900}
+                  className="h-auto w-full object-cover align-middle transition-transform duration-700 ease-out hover:scale-[1.03]"
+                />
+              </div>
+              {(img.title || img.description) && (
+                <figcaption className="text-[10px] uppercase tracking-[0.18em] text-zinc-500">
+                  {img.title}
+                </figcaption>
+              )}
+            </figure>
+          );
+        })}
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col gap-10">
+      {series.images.map((img, index) => (
+        <figure
+          key={img.id}
+          className={
+            index % 2 === 0
+              ? "grid gap-4 md:grid-cols-[3fr,2fr]"
+              : "grid gap-4 md:grid-cols-[2fr,3fr]"
+          }
+        >
+          <div className="overflow-hidden rounded-md bg-zinc-100 md:col-span-1">
+            <Image
+              src={img.src}
+              alt={img.title ?? ""}
+              width={1400}
+              height={900}
+              className="h-auto w-full object-cover align-middle transition-transform duration-700 ease-out hover:scale-[1.02]"
+            />
+          </div>
+          {(img.title || img.description) && (
+            <figcaption className="flex items-end text-xs uppercase tracking-[0.18em] text-zinc-500">
+              <div>
+                {img.title && <div className="mb-2">{img.title}</div>}
+                {img.description && (
+                  <p className="text-[11px] normal-case tracking-normal text-zinc-500">
+                    {img.description}
+                  </p>
+                )}
+              </div>
+            </figcaption>
+          )}
+        </figure>
+      ))}
+    </div>
+  );
+}
