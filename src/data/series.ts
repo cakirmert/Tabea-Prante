@@ -1,4 +1,13 @@
-export type SeriesSlug = "portrait" | "experimental" | "architecture" | "film" | "design" | "surreal-dreams" | "urban-glitch" | "geometric-studies";
+export type SeriesSlug =
+  | "experimental"
+  | "architecture"
+  | "portrait"
+  | "film"
+  | "design"
+  | "surreal-dreams"
+  | "urban-glitch"
+  | "geometric-studies"
+  | "portrait-extras";
 
 export type ImageSpec = {
   id: string;

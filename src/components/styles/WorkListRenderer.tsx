@@ -138,29 +138,7 @@ export function WorkListRenderer({ seriesList }: WorkListRendererProps) {
                             </div>
                         )}
 
-                        {/* CINEMATIC STYLE */}
-                        {activeStyle === "CINEMATIC" && (
-                            <div className="relative w-full aspect-video overflow-hidden group">
-                                <Image
-                                    src={hero.src}
-                                    alt={hero.title ?? ""}
-                                    fill
-                                    className="object-cover brightness-50 group-hover:brightness-75 transition-all duration-1000 ease-in-out"
-                                />
-                                <div className="absolute inset-x-0 bottom-0 p-12 bg-gradient-to-t from-black via-black/50 to-transparent flex flex-col items-start gap-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-700">
-                                    <span className="text-[10px] tracking-[0.5em] text-zinc-400 uppercase">Scene {index + 1}</span>
-                                    <h2 className="text-6xl font-light tracking-wide text-zinc-100 mix-blend-difference">
-                                        {series.title}
-                                    </h2>
-                                    <Link
-                                        href={`/series/${series.slug}`}
-                                        className="mt-4 px-6 py-2 border border-zinc-500 text-zinc-300 text-xs tracking-[0.2em] uppercase hover:bg-white hover:text-black transition-colors"
-                                    >
-                                        Play Reel
-                                    </Link>
-                                </div>
-                            </div>
-                        )}
+
 
                         {/* CLASSIC STYLE */}
                         {activeStyle === "CLASSIC" && (

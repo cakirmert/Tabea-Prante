@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { useStyle } from "@/context/StyleContext";
 import { ReactNode } from "react";
 
@@ -13,13 +13,13 @@ interface AnimatedSectionProps {
 export function AnimatedSection({ children, className, delay = 0 }: AnimatedSectionProps) {
     const { activeStyle } = useStyle();
 
-    const variants = {
+    const variants: Variants = {
         initial: { opacity: 0, y: 20 },
         animate: { opacity: 1, y: 0 },
         exit: { opacity: 0, y: -20 },
     };
 
-    const getStyleVariants = () => {
+    const getStyleVariants = (): Variants => {
         switch (activeStyle) {
             case "MINIMAL":
                 return {
@@ -36,7 +36,7 @@ export function AnimatedSection({ children, className, delay = 0 }: AnimatedSect
                     initial: { opacity: 0, y: 50 },
                     animate: { opacity: 1, y: 0, transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1], delay } }, // Elegant ease
                 };
-            case "CINEMATIC":
+            case "ANIMATION":
                 return {
                     initial: { opacity: 0, scale: 1.1, filter: "blur(5px)" },
                     animate: { opacity: 1, scale: 1, filter: "blur(0px)", transition: { duration: 2, ease: "easeInOut", delay } }, // Slow focus

@@ -4,7 +4,13 @@ import { PageShell } from "@/components/layout/PageShell";
 import { SeriesImageLayout } from "@/components/series/SeriesImageLayout";
 import { StyleWrapper } from "@/components/styles/StyleWrapper";
 import { SeriesHeader } from "@/components/series/SeriesHeader";
-import { getSeriesBySlug, type SeriesSlug } from "@/data/series";
+import { getSeriesBySlug, type SeriesSlug, seriesList } from "@/data/series";
+
+export async function generateStaticParams() {
+  return seriesList.map((series) => ({
+    slug: series.slug,
+  }));
+}
 
 interface SeriesPageProps {
   params: Promise<{ slug: SeriesSlug }>;
