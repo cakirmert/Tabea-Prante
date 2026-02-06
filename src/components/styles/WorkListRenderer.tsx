@@ -7,6 +7,7 @@ import { useStyle } from "@/context/StyleContext";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { StyleWrapper } from "@/components/styles/StyleWrapper";
 import { PhotoPlaceholder } from "@/components/common/PhotoPlaceholder";
+import { getAssetPath } from "@/utils/paths";
 
 import clsx from "clsx";
 
@@ -37,7 +38,7 @@ export function WorkListRenderer({ seriesList }: WorkListRendererProps) {
                                         />
                                     ) : (
                                         <Image
-                                            src={hero.src}
+                                            src={getAssetPath(hero.src)}
                                             alt={hero.title ?? ""}
                                             width={1600}
                                             height={1000}
@@ -82,7 +83,7 @@ export function WorkListRenderer({ seriesList }: WorkListRendererProps) {
                                         />
                                     ) : (
                                         <Image
-                                            src={hero.src}
+                                            src={getAssetPath(hero.src)}
                                             alt={hero.title ?? ""}
                                             width={1600}
                                             height={1000}
@@ -128,7 +129,7 @@ export function WorkListRenderer({ seriesList }: WorkListRendererProps) {
                                         />
                                     ) : (
                                         <Image
-                                            src={hero.src}
+                                            src={getAssetPath(hero.src)}
                                             alt={hero.title ?? ""}
                                             fill
                                             className="object-cover transition-transform duration-[1.5s] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
@@ -158,7 +159,7 @@ export function WorkListRenderer({ seriesList }: WorkListRendererProps) {
                                     />
                                 ) : (
                                     <Image
-                                        src={hero.src}
+                                        src={getAssetPath(hero.src)}
                                         alt={hero.title ?? ""}
                                         width={1600}
                                         height={1000}

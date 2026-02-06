@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { getAssetPath } from "@/utils/paths";
 import type { Series } from "@/data/series";
 
 export function SeriesCard({ series }: { series: Series }) {
@@ -13,7 +14,7 @@ export function SeriesCard({ series }: { series: Series }) {
       <div className="overflow-hidden rounded-md bg-zinc-100">
         {previewImages[0] && (
           <Image
-            src={previewImages[0].src}
+            src={getAssetPath(previewImages[0].src)}
             alt={previewImages[0].title ?? ""}
             width={900}
             height={700}
