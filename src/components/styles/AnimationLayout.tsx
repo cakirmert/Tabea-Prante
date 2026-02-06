@@ -6,12 +6,17 @@ import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { seriesList } from "@/data/series";
+import { Series } from "@/data/series";
 import { PhotoPlaceholder } from "@/components/common/PhotoPlaceholder";
+import { getAssetPath } from "@/utils/paths";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-export function AnimationLayout() {
+interface AnimationLayoutProps {
+    series: Series[];
+}
+
+export function AnimationLayout({ series }: AnimationLayoutProps) {
     const container = useRef<HTMLDivElement>(null);
     const heroRef = useRef<HTMLDivElement>(null);
     const workRef = useRef<HTMLDivElement>(null);
@@ -74,7 +79,11 @@ export function AnimationLayout() {
 
             {/* 1. HERO SECTION */}
             <section ref={heroRef} className="h-screen w-full flex flex-col items-center justify-center relative overflow-hidden z-10">
-                <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.05] pointer-events-none mix-blend-overlay"></div>
+                <div className="absolute inset-0 opacity-[0.05] pointer-events-none mix-blend-overlay"
+                    style={{
+                        backgroundImage: `url(${getAssetPath("/noise.png")})`
+                    }}
+                ></div>
 
                 <h1 className="hero-title text-5xl md:text-9xl font-bold tracking-tighter text-white mix-blend-difference mb-4 text-center">
                     TABEA PRANTE
@@ -96,19 +105,19 @@ export function AnimationLayout() {
                 </div>
 
                 <div ref={horizontalScrollContainer} className="flex gap-24 px-[20vw] w-fit">
-                    {seriesList.flatMap((series) =>
-                        series.images.map((image, i) => (
-                            <Link href={`/series/${series.slug}`} key={image.id} className="work-item relative flex-shrink-0 w-[60vw] md:w-[40vw] flex flex-col gap-6 group cursor-pointer">
+                    {series.flatMap((s) =>
+                        s.images.map((image, i) => (
+                            <Link href={`/series/${s.slug}`} key={image.id} className="work-item relative flex-shrink-0 w-[60vw] md:w-[40vw] flex flex-col gap-6 group cursor-pointer">
                                 <div className="relative w-full aspect-[4/3] overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-700 ease-out">
                                     {image.usePlaceholder || !image.src ? (
                                         <PhotoPlaceholder
-                                            series={series.slug}
+                                            series={s.slug}
                                             aspect={image.aspect}
                                             mediaType={image.mediaType}
                                         />
                                     ) : (
                                         <Image
-                                            src={image.src}
+                                            src={getAssetPath(image.src)}
                                             alt={image.title ?? ""}
                                             fill
                                             className="object-cover"
@@ -117,7 +126,7 @@ export function AnimationLayout() {
                                 </div>
                                 <div className="flex justify-between items-end border-b border-zinc-700 pb-4 group-hover:border-white transition-colors duration-500">
                                     <div>
-                                        <h2 className="text-3xl md:text-5xl font-light tracking-wide group-hover:text-white transition-colors duration-500">{image.title || series.title}</h2>
+                                        <h2 className="text-3xl md:text-5xl font-light tracking-wide group-hover:text-white transition-colors duration-500">{image.title || s.title}</h2>
                                         {image.mediaType && (
                                             <span className="text-xs uppercase tracking-widest text-zinc-500 mt-2 block group-hover:text-zinc-300 transition-colors">
                                                 [{image.mediaType}]

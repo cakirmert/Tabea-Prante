@@ -4,11 +4,13 @@ import { PageShell } from "@/components/layout/PageShell";
 import { SeriesImageLayout } from "@/components/series/SeriesImageLayout";
 import { StyleWrapper } from "@/components/styles/StyleWrapper";
 import { SeriesHeader } from "@/components/series/SeriesHeader";
-import { getSeriesBySlug, type SeriesSlug, seriesList } from "@/data/series";
+import { getAllSeries, getSeries } from "@/lib/content";
+import { SeriesSlug } from "@/data/series";
 
 export async function generateStaticParams() {
-  return seriesList.map((series) => ({
-    slug: series.slug,
+  const series = getAllSeries();
+  return series.map((s) => ({
+    slug: s.slug,
   }));
 }
 
@@ -18,7 +20,7 @@ interface SeriesPageProps {
 
 export default async function SeriesPage({ params }: SeriesPageProps) {
   const { slug } = await params;
-  const series = getSeriesBySlug(slug);
+  const series = getSeries(slug);
 
   if (!series) {
     return notFound();

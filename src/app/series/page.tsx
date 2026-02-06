@@ -1,8 +1,10 @@
 import { PageShell } from "@/components/layout/PageShell";
-import { seriesList } from "@/data/series";
+import { getAllSeries } from "@/lib/content";
 import { SeriesCard } from "@/components/series/SeriesCard";
 
 export default function SeriesIndexPage() {
+  const seriesList = getAllSeries();
+
   return (
     <PageShell>
       <section className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
