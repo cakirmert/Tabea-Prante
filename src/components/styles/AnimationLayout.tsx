@@ -81,7 +81,7 @@ export function AnimationLayout({ series }: AnimationLayoutProps) {
             <section ref={heroRef} className="h-screen w-full flex flex-col items-center justify-center relative overflow-hidden z-10">
                 <div className="absolute inset-0 opacity-[0.05] pointer-events-none mix-blend-overlay"
                     style={{
-                        backgroundImage: `url(${getAssetPath("/noise.png")})`
+                        backgroundImage: `url(${getAssetPath("/noise.svg")})`
                     }}
                 ></div>
 
