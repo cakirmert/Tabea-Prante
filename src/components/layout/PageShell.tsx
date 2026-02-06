@@ -1,11 +1,21 @@
 import { ReactNode } from "react";
-import { SiteHeader } from "@/components/layout/SiteHeader";
+import clsx from "clsx";
 
-export function PageShell({ children }: { children: ReactNode }) {
+interface PageShellProps {
+  children: ReactNode;
+  fluid?: boolean;
+  className?: string;
+}
+
+export function PageShell({ children, fluid = false, className }: PageShellProps) {
   return (
-    <div className="min-h-screen bg-zinc-50 text-zinc-900">
-      <SiteHeader />
-      <main className="mx-auto flex max-w-4xl flex-col gap-14 px-4 pb-20 pt-24 sm:pt-32">
+    <div className={clsx("min-h-screen", className)}>
+      <main
+        className={clsx(
+          "mx-auto flex flex-col gap-14 px-4 pb-20 pt-24 sm:pt-32",
+          fluid ? "max-w-none px-0 pt-0" : "max-w-4xl"
+        )}
+      >
         {children}
       </main>
     </div>

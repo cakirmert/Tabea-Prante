@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { PhotoPlaceholder } from "@/components/common/PhotoPlaceholder";
 import type { Series } from "@/data/series";
 
 export function SeriesImageLayout({ series }: { series: Series }) {
@@ -7,15 +8,19 @@ export function SeriesImageLayout({ series }: { series: Series }) {
       <div className="flex flex-col gap-10">
         {series.images.map((img) => (
           <figure key={img.id} className="flex flex-col gap-4">
-            <div className="overflow-hidden rounded-md bg-zinc-100">
-              <Image
-                src={img.src}
-                alt={img.title ?? ""}
-                width={1200}
-                height={1600}
-                className="h-auto w-full object-cover align-middle transition-transform duration-700 ease-out hover:scale-[1.02]"
-                priority
-              />
+            <div className="overflow-hidden rounded-md bg-zinc-100 relative w-full aspect-[3/4]">
+              {img.usePlaceholder || !img.src ? (
+                <PhotoPlaceholder series={series.slug} aspect="portrait" mediaType={img.mediaType} />
+              ) : (
+                <Image
+                  src={img.src}
+                  alt={img.title ?? ""}
+                  width={1200}
+                  height={1600}
+                  className="h-full w-full object-cover align-middle transition-transform duration-700 ease-out hover:scale-[1.02]"
+                  priority
+                />
+              )}
             </div>
             {(img.title || img.description) && (
               <figcaption className="max-w-md text-xs uppercase tracking-[0.2em] text-zinc-500">
@@ -43,14 +48,18 @@ export function SeriesImageLayout({ series }: { series: Series }) {
               key={img.id}
               className={`col-span-6 sm:col-span-${span} flex flex-col gap-3`}
             >
-              <div className="overflow-hidden rounded-md bg-zinc-100">
-                <Image
-                  src={img.src}
-                  alt={img.title ?? ""}
-                  width={1200}
-                  height={900}
-                  className="h-auto w-full object-cover align-middle transition-transform duration-700 ease-out hover:scale-[1.03]"
-                />
+              <div className="overflow-hidden rounded-md bg-zinc-100 relative w-full aspect-[4/3]">
+                {img.usePlaceholder || !img.src ? (
+                  <PhotoPlaceholder series={series.slug} aspect="landscape" mediaType={img.mediaType} />
+                ) : (
+                  <Image
+                    src={img.src}
+                    alt={img.title ?? ""}
+                    width={1200}
+                    height={900}
+                    className="h-full w-full object-cover align-middle transition-transform duration-700 ease-out hover:scale-[1.03]"
+                  />
+                )}
               </div>
               {(img.title || img.description) && (
                 <figcaption className="text-[10px] uppercase tracking-[0.18em] text-zinc-500">
@@ -75,14 +84,18 @@ export function SeriesImageLayout({ series }: { series: Series }) {
               : "grid gap-4 md:grid-cols-[2fr,3fr]"
           }
         >
-          <div className="overflow-hidden rounded-md bg-zinc-100 md:col-span-1">
-            <Image
-              src={img.src}
-              alt={img.title ?? ""}
-              width={1400}
-              height={900}
-              className="h-auto w-full object-cover align-middle transition-transform duration-700 ease-out hover:scale-[1.02]"
-            />
+          <div className="overflow-hidden rounded-md bg-zinc-100 md:col-span-1 relative w-full aspect-[4/3]">
+            {img.usePlaceholder || !img.src ? (
+              <PhotoPlaceholder series={series.slug} aspect="landscape" mediaType={img.mediaType} />
+            ) : (
+              <Image
+                src={img.src}
+                alt={img.title ?? ""}
+                width={1400}
+                height={900}
+                className="h-full w-full object-cover align-middle transition-transform duration-700 ease-out hover:scale-[1.02]"
+              />
+            )}
           </div>
           {(img.title || img.description) && (
             <figcaption className="flex items-end text-xs uppercase tracking-[0.18em] text-zinc-500">

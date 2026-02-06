@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 
 import { PageShell } from "@/components/layout/PageShell";
 import { SeriesImageLayout } from "@/components/series/SeriesImageLayout";
+import { StyleWrapper } from "@/components/styles/StyleWrapper";
+import { SeriesHeader } from "@/components/series/SeriesHeader";
 import { getSeriesBySlug, type SeriesSlug } from "@/data/series";
 
 interface SeriesPageProps {
@@ -17,11 +19,11 @@ export default async function SeriesPage({ params }: SeriesPageProps) {
   }
 
   return (
-    <PageShell>
-      <header className="flex items-center justify-between text-[10px] uppercase tracking-[0.18em] text-zinc-600">
-        <span>{series.title}</span>
-      </header>
-      <SeriesImageLayout series={series} />
-    </PageShell>
+    <StyleWrapper>
+      <PageShell>
+        <SeriesHeader title={series.title} />
+        <SeriesImageLayout series={series} />
+      </PageShell>
+    </StyleWrapper>
   );
 }

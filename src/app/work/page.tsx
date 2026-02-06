@@ -1,53 +1,61 @@
-import Image from "next/image";
+"use client";
+
 import Link from "next/link";
 import { PageShell } from "@/components/layout/PageShell";
 import { seriesList } from "@/data/series";
+import { WorkListRenderer } from "@/components/styles/WorkListRenderer";
+import { StyleWrapper } from "@/components/styles/StyleWrapper";
+import { AnimatedSection } from "@/components/ui/AnimatedSection";
+import { useStyle } from "@/context/StyleContext";
+import clsx from "clsx";
 
 export default function WorkPage() {
+  const { activeStyle } = useStyle();
+
+  // In Animation style, this page might not be reached via standard nav, but if user lands here:
+  // We can keep standard layout or redirect. For now, we render standard layout.
+
   return (
-    <PageShell>
-      <section className="pt-4 pb-10">
-        <p className="text-[10px] uppercase tracking-[0.3em] text-zinc-500">
-          Work
-        </p>
-        <h1 className="mt-3 text-2xl md:text-3xl">Selected series</h1>
-      </section>
+    <StyleWrapper>
+      <PageShell>
+        {/* Local Navigation (Back to Home) because SiteHeader is removed */}
+        <nav className="mb-12 flex justify-between text-xs uppercase tracking-[0.2em] text-zinc-400">
+          <Link href="/" className="hover:text-black transition-colors">← Home</Link>
+          <span>Work</span>
+        </nav>
 
-      <section className="flex flex-col gap-16 pb-16">
-        {seriesList.map((series) => {
-          const hero = series.images[0];
-          if (!hero) return null;
+        {/* Header Section */}
+        <AnimatedSection className="pt-4 pb-10">
+          {activeStyle === "MINIMAL" && (
+            <>
+              <h1 className="mt-3 text-2xl md:text-3xl">Selected series</h1>
+            </>
+          )}
 
-          return (
-            <article key={series.slug} className="group flex flex-col gap-4">
-              <div className="grid gap-4 md:grid-cols-[3fr,2fr] md:items-stretch">
-                <div className="overflow-hidden rounded-md bg-zinc-100">
-                  <Image
-                    src={hero.src}
-                    alt={hero.title ?? ""}
-                    width={1600}
-                    height={1000}
-                    className="h-auto w-full object-cover align-middle transition-transform duration-700 ease-out group-hover:scale-[1.02]"
-                  />
-                </div>
-                <div className="flex flex-col justify-between gap-4 text-xs uppercase tracking-[0.22em] text-zinc-500">
-                  <div>{series.title}</div>
-                  <div className="h-px w-full bg-zinc-200" />
-                  <div className="flex items-center justify-between text-[10px]">
-                    <Link
-                      href={`/series/${series.slug}`}
-                      className="border-b border-transparent pb-1 hover:border-zinc-500 hover:text-zinc-800"
-                    >
-                      View series
-                    </Link>
-                    <span>→</span>
-                  </div>
-                </div>
-              </div>
-            </article>
-          );
-        })}
-      </section>
-    </PageShell>
+          {activeStyle === "BRUTALIST" && (
+            <div className="border-b-4 border-black pb-8">
+              <h1 className="text-8xl font-black uppercase tracking-tighter">PROJECT_INDEX</h1>
+            </div>
+          )}
+
+          {activeStyle === "EDITORIAL" && (
+            <div className="flex justify-between items-end border-b border-black pb-6">
+              <h1 className="text-5xl font-serif">Collections</h1>
+              <span className="text-xs font-bold uppercase tracking-widest">Fal/Win 2026</span>
+            </div>
+          )}
+
+          {(activeStyle === "ANIMATION" || activeStyle === "CLASSIC") && (
+            <div className="text-center py-8">
+              <h1 className="font-serif text-5xl text-zinc-800 tracking-wide italic">Exhibitions</h1>
+              <div className="mt-6 w-24 h-px bg-zinc-300 mx-auto"></div>
+            </div>
+          )}
+
+        </AnimatedSection>
+
+        <WorkListRenderer seriesList={seriesList} />
+      </PageShell>
+    </StyleWrapper>
   );
 }

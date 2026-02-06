@@ -13,6 +13,9 @@ export const metadata: Metadata = {
   description: "Photography portfolio of Tabea Prante.",
 };
 
+import { StyleProvider } from "@/context/StyleContext";
+import { StyleSwitcher } from "@/components/styles/StyleSwitcher";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -21,7 +24,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${manrope.variable} antialiased`}>
-        {children}
+        <StyleProvider>
+          {children}
+          <StyleSwitcher />
+        </StyleProvider>
       </body>
     </html>
   );

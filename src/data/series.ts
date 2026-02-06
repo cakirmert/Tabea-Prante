@@ -1,4 +1,4 @@
-export type SeriesSlug = "portrait" | "experimental" | "architecture";
+export type SeriesSlug = "portrait" | "experimental" | "architecture" | "film" | "design" | "surreal-dreams" | "urban-glitch" | "geometric-studies";
 
 export type ImageSpec = {
   id: string;
@@ -6,37 +6,18 @@ export type ImageSpec = {
   aspect: "portrait" | "landscape" | "square";
   title?: string;
   description?: string;
+  mediaType?: "photo" | "video" | "design"; // New field
+  usePlaceholder?: boolean; // New field to force placeholder
 };
 
 export type Series = {
   slug: SeriesSlug;
   title: string;
-  layoutType: SeriesSlug;
+  layoutType: string;
   images: ImageSpec[];
 };
 
 export const seriesList: Series[] = [
-  {
-    slug: "portrait",
-    title: "Portrait",
-    layoutType: "portrait",
-    images: [
-      {
-        id: "maya",
-        src: "/MAYA.jpg",
-        aspect: "portrait",
-        title: "MAYA",
-        description: "Digital portrait photography – confident, warm, intense.",
-      },
-      {
-        id: "maya-crop",
-        src: "/MAYA.jpg",
-        aspect: "portrait",
-        title: "MAYA (detail)",
-        description: "The same portrait, read as a tighter frame.",
-      },
-    ],
-  },
   {
     slug: "experimental",
     title: "Experimental",
@@ -58,13 +39,6 @@ export const seriesList: Series[] = [
         description:
           "Digital – perspective, depth, and the pull of the unknown.",
       },
-      {
-        id: "die-treppe-alt",
-        src: "/Die_Treppe.jpg",
-        aspect: "portrait",
-        title: "Die Treppe (alt)",
-        description: "Alternate read of the same image in the grid.",
-      },
     ],
   },
   {
@@ -80,12 +54,87 @@ export const seriesList: Series[] = [
         description:
           "Timeless apartments – light, shadow, and urban geometry.",
       },
+    ],
+  },
+  {
+    slug: "portrait",
+    title: "Portrait",
+    layoutType: "portrait",
+    images: [
       {
-        id: "paris-apartements-alt",
-        src: "/paris_apartements.jpg",
+        id: "maya",
+        src: "/MAYA.jpg",
+        aspect: "portrait",
+        title: "MAYA",
+        description: "Digital portrait photography – confident, warm, intense.",
+        mediaType: "photo",
+      },
+    ],
+  },
+  // --- PLACEHOLDERS BELOW ---
+  {
+    slug: "film",
+    title: "Video Reel (Concept)",
+    layoutType: "video",
+    images: [
+      {
+        id: "reel-2026",
+        src: "",
         aspect: "landscape",
-        title: "Pariser Eleganz (alt)",
-        description: "A second framing suggestion for the same building.",
+        title: "Showreel 2026",
+        description: "A compilation of narrative shorts and commercial spots.",
+        mediaType: "video",
+        usePlaceholder: true,
+      },
+    ],
+  },
+  {
+    slug: "design",
+    title: "Design System (Concept)",
+    layoutType: "design",
+    images: [
+      {
+        id: "ui-kit",
+        src: "",
+        aspect: "square",
+        title: "Neo-Brutalist Icons",
+        description: "Iconography set designated for the Tabea Prante brand.",
+        mediaType: "design",
+        usePlaceholder: true,
+      },
+      {
+        id: "design-system",
+        src: "",
+        aspect: "landscape",
+        title: "Layout Grid Study",
+        description: "Modular grid system exploration.",
+        mediaType: "design",
+        usePlaceholder: true,
+      },
+    ],
+  },
+  {
+    slug: "portrait-extras", // Changed slug to avoid duplicate key issues if any, but array order matters most
+    title: "Studio (Concept)",
+    layoutType: "portrait",
+    images: [
+      {
+        id: "placeholder-1",
+        src: "",
+        aspect: "portrait",
+        title: "Study 02 (Pending)",
+        description: "Upcoming shoot from Berlin session.",
+        mediaType: "photo",
+        usePlaceholder: true,
+      },
+      {
+        id: "placeholder-2",
+        src: "",
+        aspect: "landscape",
+        title: "Studio Context",
+        description: "Behind the scenes.",
+        mediaType: "photo",
+        usePlaceholder: true,
       },
     ],
   },
