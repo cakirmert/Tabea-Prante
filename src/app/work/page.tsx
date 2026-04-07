@@ -1,8 +1,5 @@
-import { getAllSeries } from "@/lib/content";
-import { WorkPageClient } from "@/components/work/WorkPageClient";
+import { redirect } from "next/navigation";
 
 export default function WorkPage() {
-  const series = getAllSeries();
-
-  return <WorkPageClient series={series} />;
+  redirect("/#work");
 }

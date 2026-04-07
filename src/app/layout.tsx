@@ -14,7 +14,6 @@ export const metadata: Metadata = {
 };
 
 import { StyleProvider } from "@/context/StyleContext";
-import { StyleSwitcher } from "@/components/styles/StyleSwitcher";
 
 export default function RootLayout({
   children,
@@ -26,7 +25,6 @@ export default function RootLayout({
       <body className={`${manrope.variable} antialiased`}>
         <StyleProvider>
           {children}
-          <StyleSwitcher />
         </StyleProvider>
       </body>
     </html>

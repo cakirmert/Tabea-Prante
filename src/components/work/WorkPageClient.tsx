@@ -55,6 +55,31 @@ export function WorkPageClient({ series }: WorkPageClientProps) {
                 </AnimatedSection>
 
                 <WorkListRenderer seriesList={series} />
+
+                <AnimatedSection className="mt-20 border-t border-zinc-200 pt-10 pb-8">
+                    <div className="space-y-3">
+                        <p className="text-[10px] uppercase tracking-[0.3em] text-zinc-500">
+                            How to reach me
+                        </p>
+                        <div className="flex flex-wrap gap-4 text-xs uppercase tracking-[0.24em] text-zinc-800">
+                            <a
+                                href="mailto:tabea.prante@gmail.com"
+                                className="border-b border-current pb-1 hover:opacity-50 transition-opacity"
+                            >
+                                tabea.prante@gmail.com
+                            </a>
+                            <span className="opacity-30">/</span>
+                            <a
+                                href="https://www.instagram.com/filmsbytabea"
+                                target="_blank"
+                                rel="noreferrer"
+                                className="border-b border-transparent pb-1 hover:border-current transition-colors"
+                            >
+                                Instagram
+                            </a>
+                        </div>
+                    </div>
+                </AnimatedSection>
             </PageShell>
         </StyleWrapper>
     );

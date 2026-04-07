@@ -1,116 +1,129 @@
 "use client";
 
+import { useRef, useEffect } from "react";
 import Link from "next/link";
-import { PageShell } from "@/components/layout/PageShell";
-import { StyleWrapper } from "@/components/styles/StyleWrapper";
-import { AnimatedSection } from "@/components/ui/AnimatedSection";
-import { AnimationLayout } from "@/components/styles/AnimationLayout";
-import { useStyle } from "@/context/StyleContext";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { WorkListRenderer } from "@/components/styles/WorkListRenderer";
 import { Series } from "@/data/series";
 
 interface ClientHomeWrapperProps {
     series: Series[];
 }
 
-export function ClientHomeWrapper({ series }: ClientHomeWrapperProps) {
-    const { activeStyle } = useStyle();
+gsap.registerPlugin(ScrollTrigger);
 
-    // Animation style uses its own independent layout (SPA)
-    if (activeStyle === "ANIMATION") {
-        return (
-            <StyleWrapper>
-                <AnimationLayout series={series} />
-            </StyleWrapper>
-        );
-    }
+export function ClientHomeWrapper({ series }: ClientHomeWrapperProps) {
+    const backdropRef = useRef<HTMLDivElement>(null);
+    const overlayRef = useRef<HTMLDivElement>(null);
+    const spacerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const backdrop = backdropRef.current;
+        const overlay = overlayRef.current;
+        const spacer = spacerRef.current;
+        if (!backdrop || !overlay || !spacer) return;
+
+        const st1 = ScrollTrigger.create({
+            trigger: spacer,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+            animation: gsap.to(overlay, {
+                opacity: 0,
+                filter: "blur(30px)",
+                scale: 1.6,
+                ease: "none",
+            }),
+            onLeave: () => {
+                overlay.style.visibility = "hidden";
+                backdrop.style.visibility = "hidden";
+            },
+            onEnterBack: () => {
+                overlay.style.visibility = "visible";
+                backdrop.style.visibility = "visible";
+            },
+        });
+
+        const st2 = ScrollTrigger.create({
+            trigger: spacer,
+            start: "top top",
+            end: "80% top",
+            scrub: true,
+            animation: gsap.to(backdrop, {
+                opacity: 0,
+                ease: "none",
+            }),
+        });
+
+        return () => {
+            st1.kill();
+            st2.kill();
+        };
+    }, []);
 
     return (
-        <StyleWrapper>
-            <PageShell>
-                <section className="flex flex-col justify-center relative min-h-[70vh] py-10">
+        <div className="relative bg-[#e8e8e8]">
+            {/* Hero — fixed overlay, true black */}
+            <div ref={backdropRef} className="fixed inset-0 z-20 bg-black pointer-events-none" />
+            <div ref={overlayRef} className="fixed inset-0 z-30 flex flex-col items-center justify-center pointer-events-none">
+                <h1 className="text-[clamp(2.5rem,8vw,7rem)] font-light tracking-[0.08em] uppercase text-zinc-200 leading-none text-center">
+                    Tabea Prante
+                </h1>
+                <p className="mt-4 text-xs uppercase tracking-[0.35em] text-zinc-500">
+                    Director &nbsp;/&nbsp; Visual Editor
+                </p>
+            </div>
 
-                    <AnimatedSection className="mb-12 flex justify-between items-center text-xs uppercase tracking-[0.2em] text-zinc-400 relative z-50">
-                        {activeStyle !== "BRUTALIST" && activeStyle !== "EDITORIAL" ? (
-                            <span>Tabea Prante</span>
-                        ) : (
-                            <span>{/* Spacer or empty */}</span>
-                        )}
+            {/* Spacer — shorter so gallery appears sooner */}
+            <div ref={spacerRef} className="h-[60vh]" />
 
-                        <nav className="flex gap-6 pointer-events-auto">
-                            <Link href="/work" className="hover:text-black transition-colors">Work</Link>
-                            <Link href="/about" className="hover:text-black transition-colors">About</Link>
-                        </nav>
-                    </AnimatedSection>
+            {/* Work */}
+            <main className="relative z-10 bg-[#e8e8e8] text-zinc-900">
+                <div className="mx-auto max-w-[1600px] px-6 pt-8 pb-16 md:px-12">
+                    <p className="mb-6 text-xs uppercase tracking-[0.2em] text-zinc-500">
+                        selected work
+                    </p>
+                    <WorkListRenderer seriesList={series} />
+                </div>
 
-                    {/* MINIMAL (Default) */}
-                    {activeStyle === "MINIMAL" && (
-                        <AnimatedSection className="flex flex-col gap-6 md:gap-8 max-w-2xl px-4 md:px-0">
-                            <h1 className="text-4xl md:text-6xl leading-[1.1] font-light tracking-tight text-zinc-900">
-                                Capturing the silence between <span className="italic font-serif">chaos</span> and <span className="opacity-50 blur-[1px]">clarity</span>.
-                            </h1>
-                            <p className="text-base text-zinc-500 leading-relaxed max-w-md">
-                                A collection of visual fragments. Exploring the delicate balance of light, form, and human presence in a digital age.
+                {/* Contact */}
+                <section className="bg-[#e8e8e8] border-t border-zinc-300 text-zinc-900">
+                    <div className="mx-auto max-w-[1600px] px-6 py-16 md:px-12 lg:py-20">
+                        <div className="space-y-6 max-w-lg">
+                            <p className="text-[11px] uppercase tracking-[0.35em] text-zinc-400">Contact</p>
+                            <p className="text-base leading-relaxed text-zinc-600">
+                                Say hi for work inquiries or collaborations.
                             </p>
-                        </AnimatedSection>
-                    )}
-
-                    {/* BRUTALIST */}
-                    {activeStyle === "BRUTALIST" && (
-                        <div className="grid grid-cols-1 gap-12 px-4 md:px-0">
-                            <AnimatedSection delay={0.1}>
-                                <h1 className="text-[12vw] leading-[0.8] font-black uppercase tracking-tighter text-black select-none">
-                                    TABEA<br />PRANTE
-                                </h1>
-                            </AnimatedSection>
-                            <AnimatedSection delay={0.2} className="border-t-4 border-black pt-6 flex flex-col md:flex-row justify-between gap-8">
-                                <p className="text-xl font-bold font-mono max-w-4xl uppercase">
-                                    Structures of reality. <br /> Filtered through aperture.
-                                </p>
-                            </AnimatedSection>
-                        </div>
-                    )}
-
-                    {/* EDITORIAL */}
-                    {activeStyle === "EDITORIAL" && (
-                        <div className="grid grid-cols-12 gap-4 px-4 md:px-0">
-                            <div className="col-span-12 md:col-span-8">
-                                <AnimatedSection>
-                                    <span className="block text-sm font-bold uppercase tracking-widest mb-4">Tabea Prante</span>
-                                    <h1 className="text-6xl md:text-9xl font-serif tracking-tight text-[#1D1D1F] leading-none mb-6">
-                                        Visual<br />Editor
-                                    </h1>
-                                </AnimatedSection>
-                            </div>
-                            <div className="col-span-12 md:col-span-4 flex flex-col justify-end pb-4">
-                                <AnimatedSection delay={0.3}>
-                                    <div className="w-12 h-px bg-black mb-4"></div>
-                                    <p className="text-sm font-sans leading-relaxed text-zinc-600">
-                                        Fashioning narratives from the mundane. A curated study of light, texture, and the human condition.
-                                    </p>
-                                </AnimatedSection>
+                            <div className="flex flex-col gap-4">
+                                <a
+                                    href="mailto:tabea.prante@gmail.com"
+                                    className="w-fit text-lg text-zinc-800 border-b border-zinc-400 pb-1 transition-colors hover:text-black hover:border-black"
+                                >
+                                    tabea.prante@gmail.com
+                                </a>
+                                <a
+                                    href="https://www.instagram.com/filmsbytabea"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="w-fit text-lg text-zinc-800 border-b border-zinc-400 pb-1 transition-colors hover:text-black hover:border-black"
+                                >
+                                    @filmsbytabea
+                                </a>
                             </div>
                         </div>
-                    )}
 
-                    {/* CLASSIC */}
-                    {activeStyle === "CLASSIC" && (
-                        <AnimatedSection className="text-center flex flex-col items-center gap-10 px-4 md:px-0">
-                            <div className="w-px h-24 bg-zinc-300"></div>
-                            <p className="font-serif italic text-xl text-zinc-500">
-                                The Portfolio of Tabea Prante
-                            </p>
-                            <h1 className="text-6xl md:text-8xl font-serif text-zinc-900 tracking-wide">
-                                Visual<br />Short Stories
-                            </h1>
-                            <p className="max-w-lg text-lg text-zinc-600 font-serif leading-loose">
-                                Where photography meets the art of design, quietly observing the world through a lens of timeless elegance.
-                            </p>
-                            <div className="w-px h-24 bg-zinc-300"></div>
-                        </AnimatedSection>
-                    )}
-
+                        {/* Footer */}
+                        <div className="mt-12 border-t border-zinc-300 pt-6 pb-2 flex flex-col gap-4 sm:flex-row sm:justify-between text-[10px] uppercase tracking-[0.3em] text-zinc-400">
+                            <span>Tabea Prante &copy; {new Date().getFullYear()}</span>
+                            <div className="flex gap-6">
+                                <Link href="/impressum" className="hover:text-zinc-700 transition-colors">Impressum</Link>
+                                <Link href="/datenschutz" className="hover:text-zinc-700 transition-colors">Datenschutz</Link>
+                            </div>
+                        </div>
+                    </div>
                 </section>
-            </PageShell>
-        </StyleWrapper>
+            </main>
+        </div>
     );
 }

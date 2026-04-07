@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Claude_Preview__preview_start",
+      "Bash(npm run:*)",
+      "Bash(rm \"D:/Tabea-Prante/out/content/Film/FREE MIND neu.mov\")",
+      "Bash(npx gh-pages:*)",
+      "Bash(ffmpeg -version)",
+      "Bash(ffmpeg -i \"D:/Tabea-Prante/public/content/Film/FREE MIND neu.mov\")",
+      "Bash(ffmpeg -i \"D:/Tabea-Prante/public/content/Film/FREE MIND neu.mov\" -c:v libx264 -crf 28 -preset slow -vf \"scale=1280:-2\" -c:a aac -b:a 128k -movflags +faststart \"D:/Tabea-Prante/public/content/Film/FREE_MIND.mp4\" -y)",
+      "Bash(magick --version)",
+      "Bash(convert --version)",
+      "Bash(pip show:*)",
+      "Bash(python3:*)",
+      "Bash(python -c \"from PIL import Image; print\\(''ok''\\)\")",
+      "Bash(python compress.py)",
+      "Bash(git -C D:/Tabea-Prante log --all --oneline -- public/content/Fotografie/Maya.psd)",
+      "Bash(git -C D:/Tabea-Prante log --all --diff-filter=D --oneline -- *Maya* *Jan*)",
+      "Bash(ffmpeg -i \"D:/Tabea-Prante/public/content/Film/FREE_MIND.mp4\" -ss 00:00:50 -frames:v 1 -q:v 2 \"D:/Tabea-Prante/public/content/Film/FREE_MIND_poster.jpg\" -y)",
+      "Bash(python -c \":*)",
+      "Bash(git -C D:/Tabea-Prante log --all --oneline -- \"public/content/Fotografie/Portrait_am_Schlachtensee.JPG\")",
+      "Bash(git -C D:/Tabea-Prante log --all --oneline)",
+      "Bash(git -C D:/Tabea-Prante show e3617a1 --stat)",
+      "Bash(git -C D:/Tabea-Prante show ce9a4ac --stat)",
+      "Bash(git -C D:/Tabea-Prante show 1797299 --stat)",
+      "Bash(ffmpeg -i \"C:/Users/mert-/Downloads/Jan.jpf\" -vf \"scale=1600:-2\" -q:v 3 \"D:/Tabea-Prante/public/content/Fotografie/Jan.jpg\" -y)",
+      "Read(//c/Users/mert-/Downloads/**)",
+      "Read(//c/Users/mert-/**)",
+      "Bash(find C:/Users/mert-/AppData/Local/Temp -name upload_* -type f)"
+    ]
+  }
+}

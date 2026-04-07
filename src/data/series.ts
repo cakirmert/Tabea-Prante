@@ -1,13 +1,7 @@
 export type SeriesSlug =
-  | "experimental"
-  | "architecture"
-  | "portrait"
-  | "film"
-  | "design"
-  | "geometric-studies"
-  | "surreal-dreams"
-  | "urban-glitch"
-  | "portrait-extras";
+  | "Design"
+  | "Film"
+  | "Fotografie";
 
 export type ImageSpec = {
   id: string;
@@ -15,9 +9,11 @@ export type ImageSpec = {
   aspect: "portrait" | "landscape" | "square";
   title?: string;
   description?: string;
-  mediaType?: "photo" | "video" | "design";
+  mediaType: "photo" | "video";
+  poster?: string;
   usePlaceholder?: boolean;
-  project?: string; // Added for project grouping
+  project?: string;
+  seriesSlug: SeriesSlug;
 };
 
 export type Series = {
@@ -27,52 +23,20 @@ export type Series = {
   images: ImageSpec[];
 };
 
-// Base definitions for series metadata (title, layout)
-// Images will be populated from the file system
 export const seriesDefinitions: Omit<Series, "images">[] = [
   {
-    slug: "experimental",
-    title: "Experimental",
-    layoutType: "experimental",
+    slug: "Design",
+    title: "Design",
+    layoutType: "Design",
   },
   {
-    slug: "architecture",
-    title: "Architecture",
-    layoutType: "architecture",
+    slug: "Film",
+    title: "Film",
+    layoutType: "Film",
   },
   {
-    slug: "portrait",
-    title: "Portrait",
-    layoutType: "portrait",
-  },
-  {
-    slug: "film",
-    title: "Video Reel (Concept)",
-    layoutType: "video",
-  },
-  {
-    slug: "design",
-    title: "Design System (Concept)",
-    layoutType: "design",
-  },
-  {
-    slug: "geometric-studies",
-    title: "Geometric Studies",
-    layoutType: "experimental",
-  },
-  {
-    slug: "surreal-dreams",
-    title: "Surreal Dreams",
-    layoutType: "experimental",
-  },
-  {
-    slug: "urban-glitch",
-    title: "Urban Glitch",
-    layoutType: "experimental",
-  },
-  {
-    slug: "portrait-extras",
-    title: "Studio (Concept)",
-    layoutType: "portrait",
+    slug: "Fotografie",
+    title: "Fotografie",
+    layoutType: "Fotografie",
   },
 ];
